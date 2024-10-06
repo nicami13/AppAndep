@@ -1,13 +1,12 @@
 <WindowManager>:
     WelcomeScreen:
+    LoginScreen:
 
 <WelcomeScreen>:
     name: 'welcome'
-
     FloatLayout:
-        # Imagen de fondo
         Image:
-            source: 'Images\fondo.jpg'  # Cambia esto por la imagen de fondo que desees
+            source: 'AppKivyMD/Images/fondo.jpeg'
             allow_stretch: True
             keep_ratio: False
             size_hint: 1, 1
@@ -18,54 +17,150 @@
             text: "Bienvenido"
             font_size: '32sp'
             pos_hint: {"center_x": 0.5, "center_y": 0.7}
-            color: 1, 1, 1, 1
+            color: 0, 0, 0, 1
 
         # Descripción
         Label:
-            text: "Aprenda a relajarse con sesiones guiadas y a dormir mejor con sonidos. Medite para descubrir su yo interior."
+            text: "Aprenda a relajarse con sesiones guiadas y a dormir mejor con sonidos.\nMedite para descubrir su yo interior."
             halign: "center"
             font_size: '16sp'
+            text_size: self.width * 0.8, None  # Ajuste al 80% del ancho del contenedor
             size_hint: (0.8, None)
-            height: self.texture_size[1]  # Ajustar la altura automáticamente
+            height: self.texture_size[1]
             pos_hint: {"center_x": 0.5, "center_y": 0.55}
-            color: 1, 1, 1, 1
+            color: 0, 0, 0, 1
 
-        # Botón de Registro
-        Button:
-            text: "Regístrate"
-            size_hint: 0.7, 0.1
-            pos_hint: {"center_x": 0.5, "center_y": 0.35}
-            on_release: app.on_register()
+        # Contenedor para los botones con espacio entre ellos
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 0.7, 0.4
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}
+            spacing: '10dp'  # Espacio entre los botones
 
-        # Botón de Inicio de Sesión
-        Button:
-            text: "Inicie sesión"
-            background_color: (0, 0.47, 1, 1)  # Cambia el color del botón
-            size_hint: 0.7, 0.1
-            pos_hint: {"center_x": 0.5, "center_y": 0.25}
-            on_release: app.on_login()
+            # Botón de Registro
+            Button:
+                text: "Regístrate"
+                size_hint: 1, None
+                height: 50
+                background_normal: ""
+                background_color: (0.2, 0.6, 0.8, 1)  # Color de fondo
+                on_release:
+                    app.root.current = 'login'  # Cambiamos 'Login' a 'login'
+                    app.root.transition.direction = 'left'
+                canvas.before:
+                    Color:
+                        rgba: (0.2, 0.6, 0.8, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: (20, 20, 20, 20)  # Esquinas redondeadas
 
-        # Botón para Continuar sin Registrarse
-        Button:
-            text: "Continuar sin registrarse"
-            size_hint: 0.7, 0.1
-            pos_hint: {"center_x": 0.5, "center_y": 0.15}
-            on_release: app.on_continue_without_register()
+            # Botón de Inicio de Sesión
+            Button:
+                text: "Inicie sesión"
+                size_hint: 1, None
+                height: 50
+                background_normal: ""
+                background_color: (0, 0.47, 1, 1)
+                on_release:
+                    app.root.current = 'login'  # Cambiamos 'Login' a 'login'
+                    app.root.transition.direction = 'left'
+                canvas.before:
+                    Color:
+                        rgba: (0, 0.47, 1, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20, 20, 20, 20]  # Esquinas redondeadas
 
-        # Botón para Saltar
-        Button:
-            text: "Saltar"
-            size_hint: None, None
-            size: 100, 50
-            pos_hint: {"center_x": 0.9, "center_y": 0.95}
-            on_release: app.on_skip()
+            # Botón para Continuar sin Registrarse
+            Button:
+                text: "Continuar sin registrarse"
+                size_hint: 1, None
+                height: 50
+                background_normal: ""
+                background_color: (0.2, 0.6, 0.8, 1)
+                on_release:
+                    app.on_continue_without_register()
+                canvas.before:
+                    Color:
+                        rgba: (0.2, 0.6, 0.8, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20, 20, 20, 20]  # Esquinas redondeadas
 
         # Texto Legal
         Label:
-            text: "Al tocar Registrarse, Iniciar sesión, Continuar sin registrarse u Omitir, aceptas nuestros Términos de uso y nuestra Política de privacidad. Por favor revísalos antes de continuar."
+            text: "Al tocar Registrarse, Iniciar sesión o Continuar sin registrarse,\naceptas nuestros Términos de uso y nuestra Política de privacidad. Por favor revísalos antes de continuar."
             halign: "center"
+            text_size: self.width * 0.9, None  # Ajuste al 90% del ancho del contenedor
             font_size: "12sp"
-            size_hint: (0.8, None)
+            size_hint: (0.9, None)
             height: self.texture_size[1]  # Ajustar la altura automáticamente
             pos_hint: {"center_x": 0.5, "center_y": 0.05}
-            color: 1, 1, 1, 1
+            color: 0, 0, 0, 1
+
+<LoginScreen>:
+    name: 'login'
+    FloatLayout:
+        Image:
+            source: 'AppKivyMD/Images/fondo.jpeg'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        Label:
+            text: "Iniciar sesión"
+            font_size: '32sp'
+            pos_hint: {"center_x": 0.5, "center_y": 0.8}
+            color: 0, 0, 0, 1
+
+        # Campo de entrada para el usuario
+        TextInput:
+            id: username_input
+            hint_text: "Nombre de usuario"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.6}
+            multiline: False
+            background_color: (1, 1, 1, 1)  # Color de fondo blanco
+            foreground_color: (0, 0, 0, 1)  # Color de texto negro
+
+        # Campo de entrada para la contraseña
+        TextInput:
+            id: password_input
+            hint_text: "Contraseña"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            multiline: False
+            password: True  # Hace que el texto se oculte
+            background_color: (1, 1, 1, 1)  # Color de fondo blanco
+            foreground_color: (0, 0, 0, 1)  # Color de texto negro
+
+        # Botón de inicio de sesión
+        Button:
+            text: "Iniciar sesión"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.35}
+            background_normal: ""
+            background_color: (0, 0.47, 1, 1)
+            on_release:
+                app.on_login()  # Llama a la función de inicio de sesión
+            canvas.before:
+                Color:
+                    rgba: (0, 0.47, 1, 1)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20, 20, 20, 20]  # Esquinas redondeadas
+
+        # Texto de recordatorio para la contraseña
+        Label:
+            text: "¿Olvidaste tu contraseña?"
+            pos_hint: {"center_x": 0.5, "center_y": 0.2}
+            color: 0, 0, 0, 1
+
+

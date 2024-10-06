@@ -1,12 +1,19 @@
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
+from kivy.core.window import Window
 
+Window.size = (360, 640)
 # Cargar el archivo KV
 Builder.load_file('design.kv')
 
 class WelcomeScreen(Screen):
     pass
+
+class LoginScreen(Screen):
+    def on_enter(self):
+        self.ids.username_input.text = ''  # Limpia el campo de entrada de usuario al entrar
+        self.ids.password_input.text = ''  # Limpia el campo de entrada de contraseña al entrar
 
 class WindowManager(ScreenManager):
     pass
@@ -19,13 +26,12 @@ class MainApp(App):
         print("Regístrate")  # Implementa la lógica de registro aquí
 
     def on_login(self):
-        print("Inicie sesión")  # Implementa la lógica de inicio de sesión aquí
+        username = self.root.get_screen('login').ids.username_input.text
+        password = self.root.get_screen('login').ids.password_input.text
+        print(f"Nombre de usuario: {username}, Contraseña: {password}")  # Puedes implementar la lógica de autenticación aquí
 
     def on_continue_without_register(self):
         print("Continuar sin registrarse")  # Implementa la lógica aquí
-
-    def on_skip(self):
-        print("Saltar")  # Implementa la lógica de saltar aquí
 
 if __name__ == '__main__':
     MainApp().run()
