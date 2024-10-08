@@ -4,6 +4,7 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 from kivy.core.window import Window
+import random
 import re  # Para la validación del correo
 
 # Configura la ventana
@@ -13,27 +14,52 @@ Window.size = (360, 640)
 Builder.load_file('design.kv')
 
 # Inicializa Firebase
-cred = credentials.Certificate('AppKivyMD/Services/test-f9337-firebase-adminsdk-a6m83-c75cf906db.json')
+cred = credentials.Certificate('AppKivyMD/Services/test-f9337-firebase-adminsdk-a6m83-345b238a61.json')
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://test-f9337-default-rtdb.firebaseio.com/'
 })
 
-# Clases de pantallas
+#
 class WelcomeScreen(Screen):
     pass
 
 class LoginScreen(Screen):
     pass
 
-class RegisterScreen(Screen):
+class RegisterScreen_1(Screen):
     pass
-
+class RegisterScreen_2(Screen):
+    pass
+class QuestionScreen_1(Screen):
+    pass
+class QuestionScreen_3(Screen):
+    pass
+class QuestionScreen_2(Screen):
+    pass
+class QuestionScreen_4(Screen):
+    pass
+class QuestionScreen_5(Screen):
+    pass
+class QuestionScreen_6(Screen):
+    pass
+class QuestionScreen_7(Screen):
+    pass
 class WindowManager(ScreenManager):
     pass
 
 class MainApp(App):
     def build(self):
         return WindowManager()
+    
+    def email_exists(self, email):
+        ref = db.reference('Users')
+        users = ref.get()  # Obtener todos los usuarios de Firebase
+
+        if users:  # Si existen usuarios en la base de datos
+            for user_id, user_data in users.items():
+                if user_data.get('email') == email:
+                    return True  # El correo ya está en uso
+        return False  # El correo no está en uso
 
     def validate_email(self, email):
         pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
@@ -54,6 +80,7 @@ class MainApp(App):
         return True, ""
 
     def on_register(self):
+        # Obtener los datos del registro
         fullname = self.root.get_screen('register').ids.fullname_input.text
         username = self.root.get_screen('register').ids.username_input.text
         password = self.root.get_screen('register').ids.password_input.text
@@ -63,6 +90,7 @@ class MainApp(App):
         email_error_label = self.root.get_screen('register').ids.email_error
         password_error_label = self.root.get_screen('register').ids.password_error
         confirm_password_error_label = self.root.get_screen('register').ids.confirm_password_error
+        login_button = self.root.get_screen('register').ids.login_button
 
         # Validar nombre completo
         valid_fullname, fullname_message = self.validate_fullname(fullname)
@@ -76,6 +104,11 @@ class MainApp(App):
             email_error_label.text = "Correo electrónico no válido"
         else:
             email_error_label.text = ""
+
+        # Verificar si el correo ya existe en la base de datos
+        if self.email_exists(username):
+            email_error_label.text = "El correo ya está en uso"
+            return  # No continuar si el correo ya existe
 
         # Validar contraseña
         valid_password, password_message = self.validate_password(password)
@@ -93,26 +126,32 @@ class MainApp(App):
         # Si todas las validaciones son correctas
         if valid_fullname and self.validate_email(username) and valid_password and password == confirm_password:
             print("Registro exitoso")
-            
-            # Obtener una referencia a la base de datos
-            ref = db.reference('Users')  # Ruta a 'Users'
 
-            # Crear un nuevo registro
-            user_data = {
-                    'fullname': fullname,
-                    'email': username,
-                'password': password  # No es recomendable almacenar contraseñas en texto plano
-            }
+            # Aquí actualizamos los datos del usuario anónimo
+            if hasattr(self, 'user_id'):
+                try:
+                    # Obtener una referencia a la base de datos para el usuario actual
+                    user_ref = db.reference(f'Users/{self.user_id}')
+                    
+                    # Actualizar los datos del usuario
+                    updated_user_data = {
+                        'fullname': fullname,
+                        'email': username,
+                        'password': password  # Nuevamente, no es recomendable guardar contraseñas en texto plano
+                    }
+                    user_ref.update(updated_user_data)
+                    print(f"Usuario {self.user_id} actualizado con los datos: {updated_user_data}")
 
-            # Actualizar la base de datos usando el método `update`
-            try:
-                ref.push(user_data)  # Usa `push` para crear un nuevo registro único
-                print("Datos enviados a Firebase correctamente:", user_data)
-            except Exception as e:
-                print(f"Ocurrió un error al enviar datos a Firebase: {e}")
-
+                    # Habilitar el botón de inicio de sesión
+                    login_button.disabled = False
+                except Exception as e:
+                    print(f"Ocurrió un error al actualizar el usuario: {e}")
+            else:
+                print("No se encontró un usuario anónimo para actualizar.")
         else:
             print("Errores en el formulario")
+
+
 
     def on_login(self):
     # Obtener correo y contraseña desde la pantalla de inicio de sesión
@@ -156,9 +195,92 @@ class MainApp(App):
             email_error_label.text = "Error al conectar con la base de datos"
 
 
-    # Método para continuar sin registrarse
     def on_continue_without_register(self):
-        print("Continuar sin registrarse")
+    # Generar identificador único para usuario anónimo
+        anonymous_email = f"No email{random.randint(1000, 9999)}"
+        
+        ref = db.reference('Users')
+        users = ref.get()
+        
+        # Buscar si ya existe un usuario anónimo similar
+        existing_user = None
+        if users:
+            for user_id, user_data in users.items():
+                if user_data.get('email') == anonymous_email:
+                    existing_user = user_id
+                    break
+
+        if existing_user:
+            # Si el usuario ya existe, usamos su ID
+            self.user_id = existing_user
+            print(f"Usuario anónimo existente encontrado: {self.user_id}")
+        else:
+            # Si no existe, creamos un nuevo usuario anónimo
+            user_data = {
+                'fullname': f"No nombre{random.randint(1000, 9999)}",
+                'email': anonymous_email,
+                'password': f"No contraseña{random.randint(1000, 9999)}"
+            }
+            new_user_ref = ref.push(user_data)
+            self.user_id = new_user_ref.key
+            print(f"Nuevo usuario anónimo registrado: {self.user_id}")
+
+    def on_star_selected(self, rating, screen):
+        self.rating = rating
+        print(f"Calificación seleccionada: {rating}")
+        
+        # Habilitar el botón "Siguiente"
+        next_button = self.root.get_screen(screen).ids.next_button
+        next_button.disabled = False
+
+    def go_to_next_question(self, screen, QNumber):
+        print(f"ID de usuario: {self.user_id}")
+        print(f"Rating seleccionado: {self.rating}")
+        
+        # Enviar la calificación a Firebase bajo el user_id único
+        ref = db.reference(f'Responses/{self.user_id}')
+        
+        response_data = {
+            'question': f'Pregunta {QNumber}',  # Podrías cambiar esto dinámicamente
+            'rating': self.rating
+        }
+
+        try:
+            ref.push(response_data)
+            print("Respuesta enviada a Firebase correctamente:", response_data)
+        except Exception as e:
+            print(f"Ocurrió un error al enviar la respuesta a Firebase: {e}")
+
+        # Desactivar el botón después de responder
+        next_button = self.root.get_screen(screen).ids.next_button
+        next_button.disabled = True
+    def delete_user_and_responses(self):
+    # Asegurarse de que `self.user_id` esté asignado
+        if not hasattr(self, 'user_id'):
+            print("No hay usuario para eliminar.")
+            return
+
+        # Eliminar respuestas del usuario en Firebase
+        try:
+            responses_ref = db.reference(f'Responses/{self.user_id}')
+            responses_ref.delete()
+            print(f"Respuestas del usuario {self.user_id} eliminadas.")
+        except Exception as e:
+            print(f"Ocurrió un error al eliminar las respuestas: {e}")
+
+        # Eliminar usuario en Firebase
+        try:
+            user_ref = db.reference(f'Users/{self.user_id}')
+            user_ref.delete()
+            print(f"Usuario {self.user_id} eliminado.")
+        except Exception as e:
+            print(f"Ocurrió un error al eliminar el usuario: {e}")
+
+        # Reiniciar el user_id después de eliminar el usuario y sus respuestas
+        self.user_id = None
+        print("El usuario y sus respuestas han sido eliminados.")
+
+
 
 # Corre la aplicación
 if __name__ == '__main__':
