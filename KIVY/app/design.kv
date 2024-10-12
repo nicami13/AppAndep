@@ -10,6 +10,12 @@
     QuestionScreen_5:
     QuestionScreen_6:
     QuestionScreen_7:
+    HomeScreen:
+    UserScreen:
+    ChatScreen:
+    EstrategiasScreen:
+    InformacionScreen:
+    RutinasScreen:
 <WelcomeScreen>:
     name: 'welcome'
     FloatLayout:
@@ -203,8 +209,7 @@
             background_normal: ""
             background_color: (0, 0.47, 1, 1)
             on_release:
-                #app.root.current='login'
-                app.on_register()
+                app.on_register('register_1')
             canvas.before:
                 Color:
                     rgba: (0, 0.47, 1, 1)
@@ -237,6 +242,7 @@
             disabled: True
             on_release:
                 app.root.current='login'
+              
             canvas.before:
                 Color:
                     rgba: (0, 0.47, 1, 1)
@@ -343,8 +349,7 @@
             background_normal: ""
             background_color: (0, 0.47, 1, 1)
             on_release:
-                #app.root.current='login'
-                app.on_register()
+                app.on_register('register_2')
             canvas.before:
                 Color:
                     rgba: (0, 0.47, 1, 1)
@@ -441,14 +446,17 @@
             pos_hint: {"center_x": 0.5, "center_y": 0.45}
 
         Button:
+            id:login_button
             text: "Iniciar Sesión"
             size_hint: (0.8, None)
             height: 50
             pos_hint: {"center_x": 0.5, "center_y": .33}
             background_normal: ""
             background_color: (0, 0.47, 1, 1)
+            disabled:False
             on_release:
-                app.on_login()  # Cambiar a 'on_login'
+                app.on_login()  
+                app.root.transition.direction = 'left'
             canvas.before:
                 Color:
                     rgba: (0, 0.47, 1, 1)
@@ -1321,3 +1329,446 @@
                 app.root.current = 'welcome'
                 app.root.transition.direction = 'right'
                 app.delete_user_and_responses()
+<HomeScreen>:
+    name: 'HomeScreen'
+    
+    FloatLayout:  # Usamos FloatLayout para manejar mejor la posición de los elementos
+        
+        # Fondo de pantalla como imagen
+        Image:
+            source: 'AppKivyMD/Images/PantallaPrincipal.png'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1  # Ocupa toda la pantalla
+
+        # Label en la parte superior
+        Label:
+            size_hint: (1, None)  # Ocupa el 100% del ancho de la pantalla
+            height: self.texture_size[1]  # Ajusta la altura del Label al tamaño del texto
+            text: "HOLA " + app.logged_in_user + " ACA PODRÁS ENCONTRAR..."
+            halign: "center"  # Centra el texto horizontalmente
+            font_size: '18sp'
+            text_size: self.width * 0.8, None 
+            pos_hint: {'x': 0, 'y': 0.9}  # Posiciona el Label cerca de la parte superior
+            color: (0, 0, 0, 1)  # Color negro
+
+
+        Button:
+            background_color: 0.5, 0.7, 0.7, 1
+            size_hint: (0.8, None)
+            height: '100dp'
+            text: "Algunas estrategias de mejora y ayuda especiales para ti"
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            color: 0, 0, 0, 1
+            pos_hint: {'x': 0.1, 'y': 0.65}  # Posiciona el botón en la parte central
+            on_release:
+                app.root.current = 'EstrategiasScreen'
+
+        Button:
+            background_color: 0.95, 0.97, 0.76, 1
+            size_hint: (0.8, None)
+            height: '100dp'
+            text: "Rutinas de ejercicio que te pueden gustar y servir"
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            color: 0, 0, 0, 1
+            pos_hint: {'x': 0.1, 'y': 0.45}  # Posiciona el botón debajo del anterior
+            on_release:
+                app.root.current='RutinasScreen'
+
+        Button:
+            background_color: 0.95, 0.72, 0.64, 1
+            size_hint: (0.8, None)
+            height: '100dp'
+            text: "Mas informacion que te puede interesar acerca los trastornos de ansiedad y depresion"
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            color: 0, 0, 0, 1
+            pos_hint: {'x': 0.1, 'y': 0.25}  # Posiciona el botón más abajo
+            on_release:
+                app.root.current = 'InformacionScreen'
+
+        # Botones en la parte inferior
+        BoxLayout:
+            size_hint: (1, None)  # Se ajusta solo en el eje Y, ocupando el 100% del ancho
+            height: '80dp'  # Se define una altura fija para la caja de los botones
+            orientation: 'horizontal'
+            pos_hint: {'x': 0, 'y': 0}  # Posiciona el layout en la parte inferior
+            padding: [0, 0, 0, 0]  # Margen alrededor de los botones
+            spacing: 2  # Espacio entre los botones
+            
+            # Botón de Chat
+            Button:
+                size_hint: None, None
+                size: '120dp', '100dp'
+                background_normal: 'AppKivyMD/Images/chat.png'
+                background_down: 'AppKivyMD/Images/chat.png'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        width: 2
+                        rectangle: (self.x, self.y, self.width, self.height)
+                on_release:
+                    app.root.current = 'ChatScreen'
+
+            # Botón de Inicio
+            Button:
+                size_hint: None, None
+                size: '120dp', '100dp'
+                background_normal: 'AppKivyMD/Images/choza.png'
+                background_down: 'AppKivyMD/Images/choza.png'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        width: 2
+                        rectangle: (self.x, self.y, self.width, self.height)
+                on_release:
+                    app.root.current = 'HomeScreen'
+            
+            # Botón de Usuario
+            Button:
+                size_hint: None, None
+                size: '120dp', '100dp'
+                background_normal: 'AppKivyMD/Images/persona.png'
+                background_down: 'AppKivyMD/Images/persona.png'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        width: 2
+                        rectangle: (self.x, self.y, self.width, self.height)
+                on_release:
+                    app.root.current = 'UserScreen'
+<EstrategiasScreen>:
+    name:'EstrategiasScreen'
+    Image:
+        source: 'AppKivyMD/Images/PantallaEstrategias.png'
+        allow_stretch: True
+        keep_ratio: False
+        size_hint: 1, 1  # Ocupa toda la pantalla
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        
+        Label:
+            text: "Estrategias de mejora y ayuda especiales para ti"
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            font_size: 24
+            bold: True
+            size_hint_y: None
+            height: 60
+            color: 0, 0, 0, 1
+            
+        ScrollView:
+            BoxLayout:
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+                orientation: 'vertical'
+                spacing: 10
+                padding: 10
+                size_hint_y: None
+                height: self.minimum_height
+                
+                Label:
+                    halign: 'center'
+                    valign: 'middle'
+                    text: "[color=ff0000]Ejercicio de respiración[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "Inhalar por la nariz durante 4 segundos, sostener la respiración durante 7 segundos y exhalar lentamente por la boca durante 8 segundos.Este ejercicio ayuda a calmar el sistema nervioso y reducir la sensación de agobio."
+                    font_size: 16
+                    size_hint_y: None
+                    height: 120
+                    color: 0, 0, 0, 1
+
+                Label:
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "[color=ff0000]Ejercicios de enfoque sensorial[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                    
+                    text: "Elegir un objeto y observarlo detenidamente durante un minuto.Notar colores, texturas y formas. Este ejercicio ayuda a anclar la atención en el presente, alejando pensamientos ansiosos."
+                    font_size: 16
+                    size_hint_y: None
+                    height: 100
+                    color: 0, 0, 0, 1
+
+                Label:
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+                    text: "[color=ff0000]Ejercicio de gratitud[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "Escribir tres cosas por las que se está agradecido cada día. Esto promueve una mentalidad positiva y ayuda a combatir pensamientos negativos."
+                    font_size: 16
+                    size_hint_y: None
+                    height: 80
+                    color: 0, 0, 0, 1
+
+                Label:
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "[color=ff0000]Visualización positiva[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "Cerrar los ojos y visualizar un lugar tranquilo y seguro durante 5-10 minutos.Describir los detalles de ese lugar en la mente. Esto ayuda a reducir la ansiedad."
+                    font_size: 16
+                    size_hint_y: None
+                    height: 80
+                    color: 0, 0, 0, 1
+
+        Button:
+            text: "VOLVER"
+            font_size: 18
+            size_hint: None, None
+            size: 120, 40  # Cambiado para hacerlo más pequeño
+            pos_hint: {'right': 1, 'y': 0}  # Posición en la esquina inferior derecha
+            background_normal: ''
+            background_color: 1, 1, 0.4, 1  # Amarillo claro
+            on_press: app.root.current = 'HomeScreen'
+
+<InformacionScreen>:
+    name:'InformacionScreen'
+    Image:
+        source: 'AppKivyMD/Images/PantallaInformacion.png'
+        allow_stretch: True
+        keep_ratio: False
+        size_hint: 1, 1  # Ocupa toda la pantalla
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Label:
+            size_hint_y: None
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            text: "Más información que te puede interesar acerca los trastornos de ansiedad y depresión"
+            font_size: 24
+            bold: True
+            size_hint_y: None
+            height: 120
+            color: 0, 0, 0, 1
+            canvas.before:
+                Color:
+                    rgba: 1, 0.6, 0.5, 1  # Fondo color salmón
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 10
+                padding: 10
+                size_hint_y: None
+                height: self.minimum_height
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    text: "La ansiedad es un trastorno común caracterizado por una preocupación excesiva y miedo en situaciones cotidianas, que puede llevar a problemas de sueño y trastornos alimenticios. Afecta tanto el ámbito psicológico como físico, manifestándose en síntomas como dolor de estómago, taquicardia y sudoración. Existen diferentes tipos de ansiedad, como la ansiedad social, el trastorno de pánico y el mutismo selectivo. Para manejarla, se recomienda respirar profundamente, hacer ejercicio, dormir bien y centrarse en uno mismo, además de buscar ayuda profesional si los síntomas persisten y afectan la vida diaria."
+                    font_size: 16
+                    size_hint_y: None
+                    height: 320
+                    color: 0, 0, 0, 1
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    text: "La depresión es un trastorno mental común que se manifiesta a través de sentimientos persistentes de tristeza, vacío y pérdida de interés en actividades que antes se disfrutaban. A menudo, se acompaña de síntomas físicos como fatiga, cambios en el apetito y problemas de sueño. Las personas con depresión pueden tener dificultades para concentrarse y tomar decisiones, y pueden sentirse aisladas o sin esperanza. Existen varios tipos de depresión, incluidos el trastorno depresivo mayor y la distimia. Para enfrentar la depresión, es fundamental buscar apoyo emocional, mantener una rutina diaria, realizar actividad física y, si es necesario, acudir a un profesional de la salud mental para recibir tratamiento adecuado."
+                    font_size: 16
+                    size_hint_y: None
+                    height: 320
+                    color: 0, 0, 0, 1
+
+        RelativeLayout:
+            size_hint_y: None
+            height: 100
+
+            Button:
+                text: "VOLVER"
+                font_size: 18
+                size_hint: None, None
+                size: 120, 40
+                pos_hint: {'right': 1, 'y': 0}  # Posicionado en la esquina inferior derecha
+                background_normal: ''
+                background_color: 0.4, 0.7, 1, 1  # Azul claro
+                on_press: app.root.current = 'HomeScreen'
+
+<RutinasScreen>:
+    name: 'RutinasScreen'
+    
+    Image:
+        source: 'AppKivyMD/Images/PantallaRutinas.png'
+        allow_stretch: True
+        keep_ratio: False
+        size_hint: 1, 1  # Ocupa toda la pantalla
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "Rutinas de ejercicio que te pueden gustar y servir"
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            font_size: 24
+            bold: True
+            size_hint_y: None
+            height: 100
+            color: 0, 0, 0, 1
+            canvas.before:
+                Color:
+                    rgba: 1, 0.9, 0.5, 1  # Fondo color amarillo pálido
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 10
+                padding: 10
+                size_hint_y: None
+                height: self.minimum_height
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "[color=ff0000]Principiante[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    text: "Rutinas de aislamiento muscular por día: Simplemente hacer un conjunto de ejercicios según el día:\n\nLunes: Pecho\nMartes: Espalda\nMiércoles: Hombros\nJueves: Piernas\nViernes: Brazo"
+                    font_size: 16
+                    size_hint_y: None
+                    height: 220
+                    color: 0, 0, 0, 1
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "[color=ff0000]Intermedio[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    text: "PPL (Push, Pull, Legs): Es una rutina que se basa en 2 tipos de movimiento, y una zona específica (pierna), los cuales son:\n\n1. Músculos de la parte superior del cuerpo capaces de empujar (Push)\n2. Músculos de la parte superior del cuerpo capaces de jalar (Pull)\n3. Entrenamiento de piernas (Legs)"
+                    font_size: 16
+                    size_hint_y: None
+                    height: 320
+                    color: 0, 0, 0, 1
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "[color=ff0000]Avanzado[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    text: "Arnold Split: Consiste en entrenar 6 días a la semana, de la mano con 3 rutinas con aislamientos musculares en cada día, las cuales son:\n\n1. Pecho y espalda\n2. Hombro y tríceps\n3. Bíceps y pierna"
+                    font_size: 16
+                    size_hint_y: None
+                    height: 280
+                    color: 0, 0, 0, 1
+
+        Button:
+            text: "VOLVER"
+            font_size: 18
+            size_hint: None, None
+            size: 120, 40  # Botón pequeño
+            pos_hint: {'right': 1, 'y': 0}  # Posición en la esquina inferior derecha
+            background_normal: ''
+            background_color: 0.4, 0.7, 1, 1  # Azul claro
+            on_press: app.root.current = 'HomeScreen'
+
+
+
+<ChatScreen>:
+    name:'ChatScreen'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Pantalla de chat'
+        Button:
+            text: 'Volver a INICIO'
+            on_release:
+                app.root.current = 'home'
+
+<UserScreen>:
+    name:'UserScreen'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Pantalla de Usuario'
+        Button:
+            text: 'Volver a INICIO'
+            on_release:
+                app.root.current = 'home'

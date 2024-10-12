@@ -6,6 +6,7 @@ from kivy.lang import Builder
 from kivy.core.window import Window
 import random
 import re  # Para la validación del correo
+from kivy.properties import StringProperty
 
 # Configura la ventana
 Window.size = (360, 640)
@@ -14,18 +15,27 @@ Window.size = (360, 640)
 Builder.load_file('design.kv')
 
 # Inicializa Firebase
-cred = credentials.Certificate('AppKivyMD/Services/test-f9337-firebase-adminsdk-a6m83-345b238a61.json')
+cred = credentials.Certificate('AppKivyMD/Services/test-f9337-firebase-adminsdk-a6m83-4e39d48233.json')
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://test-f9337-default-rtdb.firebaseio.com/'
 })
+class RutinasScreen(Screen):
+    pass
+class EstrategiasScreen(Screen):
+    pass
+class InformacionScreen(Screen):
+    pass
+class HomeScreen(Screen):
+    pass
 
-#
+class ChatScreen(Screen):
+    pass
+class UserScreen(Screen): 
+    pass
 class WelcomeScreen(Screen):
     pass
-
 class LoginScreen(Screen):
     pass
-
 class RegisterScreen_1(Screen):
     pass
 class RegisterScreen_2(Screen):
@@ -48,6 +58,7 @@ class WindowManager(ScreenManager):
     pass
 
 class MainApp(App):
+    logged_in_user = StringProperty()
     def build(self):
         return WindowManager()
     
@@ -74,23 +85,23 @@ class MainApp(App):
             return False, "La contraseña debe tener al menos un número"
         return True, ""
 
-    def validate_fullname(self, fullname):
+    def validate_fullname(self, fullname,):
         if len(fullname) < 3:
             return False, "El nombre completo debe tener al menos 3 caracteres"
         return True, ""
 
-    def on_register(self):
+    def on_register(self,screen):
         # Obtener los datos del registro
-        fullname = self.root.get_screen('register').ids.fullname_input.text
-        username = self.root.get_screen('register').ids.username_input.text
-        password = self.root.get_screen('register').ids.password_input.text
-        confirm_password = self.root.get_screen('register').ids.confirm_password_input.text
+        fullname = self.root.get_screen(screen).ids.fullname_input.text
+        username = self.root.get_screen(screen).ids.username_input.text
+        password = self.root.get_screen(screen).ids.password_input.text
+        confirm_password = self.root.get_screen(screen).ids.confirm_password_input.text
 
-        fullname_error_label = self.root.get_screen('register').ids.fullname_error
-        email_error_label = self.root.get_screen('register').ids.email_error
-        password_error_label = self.root.get_screen('register').ids.password_error
-        confirm_password_error_label = self.root.get_screen('register').ids.confirm_password_error
-        login_button = self.root.get_screen('register').ids.login_button
+        fullname_error_label = self.root.get_screen(screen).ids.fullname_error
+        email_error_label = self.root.get_screen(screen).ids.email_error
+        password_error_label = self.root.get_screen(screen).ids.password_error
+        confirm_password_error_label = self.root.get_screen(screen).ids.confirm_password_error
+        login_button = self.root.get_screen(screen).ids.login_button
 
         # Validar nombre completo
         valid_fullname, fullname_message = self.validate_fullname(fullname)
@@ -153,6 +164,8 @@ class MainApp(App):
 
 
 
+    
+
     def on_login(self):
     # Obtener correo y contraseña desde la pantalla de inicio de sesión
         username = self.root.get_screen('login').ids.username_input.text
@@ -184,7 +197,11 @@ class MainApp(App):
                 # Recorrer usuarios para validar las credenciales
                 for user_id, user_data in users.items():
                     if user_data.get('email') == username and user_data.get('password') == password:
+                        app = App.get_running_app()  # Obtener la instancia de la aplicación
+                        app.root.current = 'HomeScreen'  # Cambiar la pantalla
+                        app.logged_in_user = user_data.get('fullname') 
                         print("Usuario logueado")
+                        
                         return
                 # Si no se encontró coincidencia
                 email_error_label.text = "El correo o la contraseña son incorrectos"
@@ -193,6 +210,7 @@ class MainApp(App):
         except Exception as e:
             print(f"Error al acceder a Firebase: {e}")
             email_error_label.text = "Error al conectar con la base de datos"
+
 
 
     def on_continue_without_register(self):
