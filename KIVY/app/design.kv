@@ -1,0 +1,1774 @@
+<WindowManager>:
+    WelcomeScreen:
+    LoginScreen:
+    RegisterScreen_1:
+    RegisterScreen_2:
+    QuestionScreen_1:
+    QuestionScreen_2:
+    QuestionScreen_3:
+    QuestionScreen_4:
+    QuestionScreen_5:
+    QuestionScreen_6:
+    QuestionScreen_7:
+    HomeScreen:
+    UserScreen:
+    ChatScreen:
+    EstrategiasScreen:
+    InformacionScreen:
+    RutinasScreen:
+<WelcomeScreen>:
+    name: 'welcome'
+    FloatLayout:
+        Image:
+            source: 'AppKivyMD/Images/fondo.jpeg'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        # Título
+        Label:
+            text: "Bienvenido"
+            font_size: '32sp'
+            pos_hint: {"center_x": 0.5, "center_y": 0.7}
+            color: 0, 0, 0, 1
+
+        # Descripción
+        Label:
+            text: "Aprenda a relajarse con sesiones guiadas y a dormir mejor con sonidos.\nMedite para descubrir su yo interior."
+            halign: "center"
+            font_size: '16sp'
+            text_size: self.width * 0.8, None  # Ajuste al 80% del ancho del contenedor
+            size_hint: (0.8, None)
+            height: self.texture_size[1]
+            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+            color: 0, 0, 0, 1
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 0.7, 0.4
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}
+            spacing: '10dp'  # Espacio entre los botones
+
+            Button:
+                text: "Regístrate"
+                size_hint: 1, None
+                height: 50
+                background_normal: ""
+                background_color: (0.2, 0.6, 0.8, 1)  # Color de fondo
+                on_release:
+                    app.root.current = 'register_1'
+                    app.root.transition.direction = 'left'
+                canvas.before:
+                    Color:
+                        rgba: (0.2, 0.6, 0.8, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: (20, 20, 20, 20)
+
+            Button:
+                text: "Inicie sesión"
+                size_hint: 1, None
+                height: 50
+                background_normal: ""
+                background_color: (0, 0.47, 1, 1)
+                on_release:
+                    app.root.current = 'login'
+                    app.root.transition.direction = 'left'
+                canvas.before:
+                    Color:
+                        rgba: (0, 0.47, 1, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20, 20, 20, 20]
+
+            Button:
+                text: "Continuar sin registrarse"
+                size_hint: 1, None
+                height: 50
+                background_normal: ""
+                background_color: (0.2, 0.6, 0.8, 1)
+                on_release:
+                    app.root.current='Question_1'
+                    app.on_continue_without_register()
+                canvas.before:
+                    Color:
+                        rgba: (0.2, 0.6, 0.8, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20, 20, 20, 20]
+
+        Label:
+            text: "Al tocar Registrarse, Iniciar sesión o Continuar sin registrarse,\naceptas nuestros Términos de uso y nuestra Política de privacidad."
+            halign: "center"
+            text_size: self.width * 0.9, None
+            font_size: "12sp"
+            size_hint: (0.9, None)
+            height: self.texture_size[1]
+            pos_hint: {"center_x": 0.5, "center_y": 0.05}
+            color: 0, 0, 0, 1
+
+<RegisterScreen_1>:
+    name: 'register_1'
+    FloatLayout:
+        Image:
+            source: 'AppKivyMD/Images/fondo.jpeg'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            
+        Label:
+            text: "Registro"
+            font_size: '32sp'
+            pos_hint: {"center_x": 0.5, "center_y": 0.85}
+            color: 0, 0, 0, 1
+
+        TextInput:
+            id: fullname_input
+            hint_text: "Nombre completo"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.7}
+            multiline: False
+            background_color: (1, 1, 1, 1)
+            foreground_color: (0, 0, 0, 1)
+
+        Label:
+            id: fullname_error
+            text: ""
+            color: 1, 0, 0, 1  # Color rojo para los errores
+            font_size: '12sp'
+            size_hint: (0.8, None)
+            pos_hint: {"center_x": 0.5, "center_y": 0.65}
+
+        TextInput:
+            id: username_input
+            hint_text: "Correo electrónico"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.6}
+            multiline: False
+            background_color: (1, 1, 1, 1)
+            foreground_color: (0, 0, 0, 1)
+
+        Label:
+            id: email_error
+            text: ""
+            color: 1, 0, 0, 1  # Color rojo para los errores
+            font_size: '12sp'
+            size_hint: (0.8, None)
+            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+
+        TextInput:
+            id: password_input
+            hint_text: "Contraseña"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            multiline: False
+            password: True
+            background_color: (1, 1, 1, 1)
+            foreground_color: (0, 0, 0, 1)
+
+        Label:
+            id: password_error
+            text: ""
+            color: 1, 0, 0, 1
+            font_size: '12sp'
+            size_hint: (0.8, None)
+            pos_hint: {"center_x": 0.5, "center_y": 0.45}
+
+        TextInput:
+            id: confirm_password_input
+            hint_text: "Confirmar contraseña"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            multiline: False
+            password: True
+            background_color: (1, 1, 1, 1)
+            foreground_color: (0, 0, 0, 1)
+
+        Label:
+            id: confirm_password_error
+            text: ""
+            color: 1, 0, 0, 1
+            font_size: '12sp'
+            size_hint: (0.8, None)
+            pos_hint: {"center_x": 0.5, "center_y": 0.35}
+
+        Button:
+            text: "Registrarse"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.25}
+            background_normal: ""
+            background_color: (0, 0.47, 1, 1)
+            on_release:
+                app.on_register('register_1')
+            canvas.before:
+                Color:
+                    rgba: (0, 0.47, 1, 1)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20, 20, 20, 20]
+
+        Button:
+            text: "Atrás"
+            color: 0, 0.75, 1, 1  # Color del texto (celeste)
+            font_size: '16sp'
+            size_hint: (None, None)
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "center_y": 0.08}
+            background_normal: ''  # Elimina el fondo del botón
+            background_down: ''  # Elimina el fondo al presionar
+            background_color: (0, 0, 0, 0)  # Color de fondo transparente
+            on_release:
+                app.root.current = 'welcome'
+                app.root.transition.direction = 'right'
+        Button:
+            id: login_button
+            text: "Inciar Sesion"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.15}
+            background_normal: ""
+            background_color: (0, 0.47, 1, 1)
+            disabled: True
+            on_release:
+                app.root.current='login'
+              
+            canvas.before:
+                Color:
+                    rgba: (0, 0.47, 1, 1)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20, 20, 20, 20]
+
+<RegisterScreen_2>:
+    name: 'register_2'
+    FloatLayout:
+        Image:
+            source: 'AppKivyMD/Images/fondo.jpeg'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            
+        Label:
+            text: "Registro"
+            font_size: '32sp'
+            pos_hint: {"center_x": 0.5, "center_y": 0.85}
+            color: 0, 0, 0, 1
+
+        TextInput:
+            id: fullname_input
+            hint_text: "Nombre completo"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.7}
+            multiline: False
+            background_color: (1, 1, 1, 1)
+            foreground_color: (0, 0, 0, 1)
+
+        Label:
+            id: fullname_error
+            text: ""
+            color: 1, 0, 0, 1  # Color rojo para los errores
+            font_size: '12sp'
+            size_hint: (0.8, None)
+            pos_hint: {"center_x": 0.5, "center_y": 0.65}
+
+        TextInput:
+            id: username_input
+            hint_text: "Correo electrónico"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.6}
+            multiline: False
+            background_color: (1, 1, 1, 1)
+            foreground_color: (0, 0, 0, 1)
+
+        Label:
+            id: email_error
+            text: ""
+            color: 1, 0, 0, 1  # Color rojo para los errores
+            font_size: '12sp'
+            size_hint: (0.8, None)
+            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+
+        TextInput:
+            id: password_input
+            hint_text: "Contraseña"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            multiline: False
+            password: True
+            background_color: (1, 1, 1, 1)
+            foreground_color: (0, 0, 0, 1)
+
+        Label:
+            id: password_error
+            text: ""
+            color: 1, 0, 0, 1
+            font_size: '12sp'
+            size_hint: (0.8, None)
+            pos_hint: {"center_x": 0.5, "center_y": 0.45}
+
+        TextInput:
+            id: confirm_password_input
+            hint_text: "Confirmar contraseña"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            multiline: False
+            password: True
+            background_color: (1, 1, 1, 1)
+            foreground_color: (0, 0, 0, 1)
+
+        Label:
+            id: confirm_password_error
+            text: ""
+            color: 1, 0, 0, 1
+            font_size: '12sp'
+            size_hint: (0.8, None)
+            pos_hint: {"center_x": 0.5, "center_y": 0.35}
+
+        Button:
+            text: "Registrarse"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.25}
+            background_normal: ""
+            background_color: (0, 0.47, 1, 1)
+            on_release:
+                app.on_register('register_2')
+            canvas.before:
+                Color:
+                    rgba: (0, 0.47, 1, 1)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20, 20, 20, 20]
+
+        Button:
+            text: "Atrás"
+            color: 0, 0.75, 1, 1  # Color del texto (celeste)
+            font_size: '16sp'
+            size_hint: (None, None)
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "center_y": 0.08}
+            background_normal: ''  # Elimina el fondo del botón
+            background_down: ''  # Elimina el fondo al presionar
+            background_color: (0, 0, 0, 0)  # Color de fondo transparente
+            on_release:
+                app.root.current = 'welcome'
+                app.root.transition.direction = 'right'
+                app.delete_user_and_responses()
+        Button:
+            id: login_button
+            text: "Inciar Sesion"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.15}
+            background_normal: ""
+            background_color: (0, 0.47, 1, 1)
+            disabled: True
+            on_release:
+                app.root.current='login'
+            canvas.before:
+                Color:
+                    rgba: (0, 0.47, 1, 1)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20, 20, 20, 20]
+
+
+<LoginScreen>:
+    name: 'login'
+    FloatLayout:
+        Image:
+            source: 'AppKivyMD/Images/fondo.jpeg'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            
+        Label:
+            text: "Inicio De Sesion"
+            font_size: '32sp'
+            pos_hint: {"center_x": 0.5, "center_y": 0.75}
+            color: 0, 0, 0, 1
+
+        TextInput:
+            id: username_input
+            hint_text: "Correo electrónico"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.6}
+            multiline: False
+            background_color: (1, 1, 1, 1)
+            foreground_color: (0, 0, 0, 1)
+
+        Label:
+            id: email_error
+            text: ""
+            color: 1, 0, 0, 1  # Color rojo para los errores
+            font_size: '12sp'
+            size_hint: (0.8, None)
+            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+
+        TextInput:
+            id: password_input
+            hint_text: "Contraseña"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            multiline: False
+            password: True
+            background_color: (1, 1, 1, 1)
+            foreground_color: (0, 0, 0, 1)
+
+        Label:
+            id: password_error
+            text: ""
+            color: 1, 0, 0, 1
+            font_size: '12sp'
+            size_hint: (0.8, None)
+            pos_hint: {"center_x": 0.5, "center_y": 0.45}
+
+        Button:
+            id:login_button
+            text: "Iniciar Sesión"
+            size_hint: (0.8, None)
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": .33}
+            background_normal: ""
+            background_color: (0, 0.47, 1, 1)
+            disabled:False
+            on_release:
+                app.on_login()  
+                app.root.transition.direction = 'left'
+            canvas.before:
+                Color:
+                    rgba: (0, 0.47, 1, 1)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20, 20, 20, 20]
+
+        Button:
+            text: "Atrás"
+            color: 0, 0.75, 1, 1  # Color del texto (celeste)
+            font_size: '16sp'
+            size_hint: (None, None)
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "center_y": 0.25}
+            background_normal: ''  # Elimina el fondo del botón
+            background_down: ''  # Elimina el fondo al presionar
+            background_color: (0, 0, 0, 0)  # Color de fondo transparente
+            on_release:
+                app.root.current = 'welcome'
+                app.root.transition.direction = 'right'
+
+
+<QuestionScreen_1>:
+    name: 'Question_1'
+    FloatLayout:
+        Image:
+            source: 'AppKivyMD/Images/fondo 1 pregunta.jpg'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Label:
+            text: "¿Sueles sentirte solo o desconectado con las personas que te rodean?"
+            halign: "center"
+            font_size: '18sp'
+            text_size: self.width * 0.8, None  # Ajuste al 80% del ancho del contenedor
+            size_hint: (0.8, None)
+            height: self.texture_size[1]
+            pos_hint: {"center_x": 0.5, "center_y": 0.75}
+            color: 0, 0, 0, 1
+
+        GridLayout:
+            cols: 2
+            row_force_default: True
+            row_default_height: '64dp'  # Fija la altura de cada fila
+            spacing: dp(10)
+            size_hint: (0.9, None)
+            height: self.minimum_height
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}  # Centrado del contenido
+
+            # Estrella 1 y su descripción
+            Button:
+                id: star1
+                background_normal: 'AppKivyMD/Images/feliz.png'  
+                background_down: 'AppKivyMD/Images/feliz.png'  
+                size_hint: None, None
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(1,'Question_1')
+            Label:
+                text: "Nunca, me siento completamente conectado con las personas que me rodean."
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+                color: 0, 0, 0, 1
+                size_hint: (1, None)  # Para que el label se ajuste al contenido
+
+            # Estrella 2 y su descripción
+            Button:
+                id: star2
+                size_hint: None, None
+                size: '64dp', '64dp'
+                background_normal: 'AppKivyMD/Images/gomelo.png'  # Imagen de fondo normal
+                background_down: 'AppKivyMD/Images/gomelo.png'  
+                on_release: app.on_star_selected(2,'Question_1')
+
+            Label:
+                text: "A veces, en ciertas situaciones o momentos, pero no es algo frecuente."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+            # Estrella 3 y su descripción
+            Button:
+                id: star3
+                size_hint: None, None
+                background_normal: 'AppKivyMD/Images/ostinado.png'  
+                background_down: 'AppKivyMD/Images/ostinado.png'  
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(3,'Question_1')
+
+            Label:
+                text: "Con frecuencia, a menudo me siento solo o desconectado, aunque esté rodeado de personas."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+            # Estrella 4 y su descripción
+            Button:
+                id: star4
+                size_hint: None, None
+                size: '64dp', '64dp'
+                background_normal: 'AppKivyMD/Images/achicopalado.png'  
+                background_down: 'AppKivyMD/Images/achicopalado.png'  
+                on_release: app.on_star_selected(4,'Question_1')
+
+
+            Label:
+                text: "Siempre, me siento constantemente solo o desconectado, sin importar quién esté a mi alrededor."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+        Button:
+            id: next_button
+            text: "Siguiente"
+            size_hint: 0.5, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.15}
+            background_normal: ""
+            background_color: (0, 0.47, 1, 1)
+            on_release: 
+                app.go_to_next_question('Question_1',1)
+                app.root.current = 'Question_2'
+            disabled: True
+
+        Button:
+            text: "Atrás"
+            color: 0, 0.75, 1, 1
+            font_size: '16sp'
+            size_hint: (None, None)
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "center_y": 0.08}
+            background_normal: ''
+            background_color:(0, 0, 0, 0)
+            on_release:
+                app.root.current = 'welcome'
+                app.root.transition.direction = 'right'
+                app.delete_user_and_responses()
+
+<QuestionScreen_2>:
+    name: 'Question_2'
+    FloatLayout:
+        Image:
+            source: 'AppKivyMD/Images/fondo 2 pregunta.jpg'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Label:
+            text: "¿Que tan alta es tu autoestima en una escala del 1 al 10?"
+            halign: "center"
+            font_size: '18sp'
+            text_size: self.width * 0.8, None  # Ajuste al 80% del ancho del contenedor
+            size_hint: (0.8, None)
+            height: self.texture_size[1]
+            pos_hint: {"center_x": 0.5, "center_y": 0.75}
+            color: 0, 0, 0, 1
+
+        GridLayout:
+            cols: 2
+            row_force_default: True
+            row_default_height: '64dp'  # Fija la altura de cada fila
+            spacing: dp(10)
+            size_hint: (0.9, None)
+            height: self.minimum_height
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}  # Centrado del contenido
+
+            # Estrella 1 y su descripción
+            Button:
+                id: star1
+                background_normal: 'AppKivyMD/Images/feliz.png'  
+                background_down: 'AppKivyMD/Images/feliz.png'  
+                size_hint: None, None
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(1,'Question_2')
+            Label:
+                text: "10-7"
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+                color: 0, 0, 0, 1
+                size_hint: (1, None)  # Para que el label se ajuste al contenido
+
+            # Estrella 2 y su descripción
+            Button:
+                id: star2
+                size_hint: None, None
+                size: '64dp', '64dp'
+                background_normal: 'AppKivyMD/Images/gomelo.png'  # Imagen de fondo normal
+                background_down: 'AppKivyMD/Images/gomelo.png'  
+                on_release: app.on_star_selected(2,'Question_2')
+
+            Label:
+                text: "7-5"
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+            # Estrella 3 y su descripción
+            Button:
+                id: star3
+                size_hint: None, None
+                background_normal: 'AppKivyMD/Images/ostinado.png'  
+                background_down: 'AppKivyMD/Images/ostinado.png'  
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(3,'Question_2')
+
+            Label:
+                text: "5-3"
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+            # Estrella 4 y su descripción
+            Button:
+                id: star4
+                size_hint: None, None
+                size: '64dp', '64dp'
+                background_normal: 'AppKivyMD/Images/achicopalado.png'  
+                background_down: 'AppKivyMD/Images/achicopalado.png'  
+                on_release: app.on_star_selected(4,'Question_2')
+
+
+            Label:
+                text: "3-1"
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+        Button:
+            id: next_button
+            text: "Siguiente"
+            size_hint: 0.5, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.15}
+            background_normal: ""
+            background_color: (0, 0.47, 1, 1)
+            on_release:
+                app.go_to_next_question('Question_2',2)
+                app.root.current = 'Question_3'
+            disabled: True
+
+        Button:
+            text: "Atrás"
+            color: 0, 0.75, 1, 1
+            font_size: '16sp'
+            size_hint: (None, None)
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "center_y": 0.08}
+            background_normal: ''
+            background_color:(0, 0, 0, 0)
+            on_release:
+                app.root.current = 'welcome'
+                app.root.transition.direction = 'right'
+                app.delete_user_and_responses()
+
+
+<QuestionScreen_3>:
+    name: 'Question_3'
+    FloatLayout:
+        Image:
+            source: 'AppKivyMD/Images/fond 3 pregunta.jpg'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Label:
+            text: "¿Tienes un horario de sueño beneficioso y acorde a tu edad?"
+            halign: "center"
+            font_size: '18sp'
+            text_size: self.width * 0.8, None  # Ajuste al 80% del ancho del contenedor
+            size_hint: (0.8, None)
+            height: self.texture_size[1]
+            pos_hint: {"center_x": 0.5, "center_y": 0.75}
+            color: 0, 0, 0, 1
+
+        GridLayout:
+            cols: 2
+            row_force_default: True
+            row_default_height: '64dp'  # Fija la altura de cada fila
+            spacing: dp(10)
+            size_hint: (0.9, None)
+            height: self.minimum_height
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}  # Centrado del contenido
+
+            # Estrella 1 y su descripción
+            Button:
+                id: star1
+                background_normal: 'AppKivyMD/Images/feliz.png'  
+                background_down: 'AppKivyMD/Images/feliz.png'  
+                size_hint: None, None
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(1,'Question_3')
+            Label:
+                text: "Sí, tengo un horario de sueño regular y suficiente para sentirme descansado/a acorde a mi edad."
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+                color: 0, 0, 0, 1
+                size_hint: (1, None)  # Para que el label se ajuste al contenido
+
+            # Estrella 2 y su descripción
+            Button:
+                id: star2
+                size_hint: None, None
+                size: '64dp', '64dp'
+                background_normal: 'AppKivyMD/Images/gomelo.png'  # Imagen de fondo normal
+                background_down: 'AppKivyMD/Images/gomelo.png'  
+                on_release: app.on_star_selected(2,'Question_3')
+
+            Label:
+                text: "A veces, trato de mantener un buen horario de sueño, pero no siempre lo logro."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+            # Estrella 3 y su descripción
+            Button:
+                id: star3
+                size_hint: None, None
+                background_normal: 'AppKivyMD/Images/ostinado.png'  
+                background_down: 'AppKivyMD/Images/ostinado.png'  
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(3,'Question_3')
+
+            Label:
+                text: "No con frecuencia, mi horario de sueño es irregular y no siempre descanso lo suficiente."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+            # Estrella 4 y su descripción
+            Button:
+                id: star4
+                size_hint: None, None
+                size: '64dp', '64dp'
+                background_normal: 'AppKivyMD/Images/achicopalado.png'  
+                background_down: 'AppKivyMD/Images/achicopalado.png'  
+                on_release: app.on_star_selected(4,'Question_3')
+
+
+            Label:
+                text: "No, tengo un horario de sueño muy desorganizado y casi nunca duermo lo necesario."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+        Button:
+            id: next_button
+            text: "Siguiente"
+            size_hint: 0.5, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.15}
+            background_normal: ""
+            background_color: (0, 0.47, 1, 1)
+            on_release:
+                app.go_to_next_question('Question_3',3)
+                app.root.current = 'Question_4'
+            disabled: True
+
+        Button:
+            text: "Atrás"
+            color: 0, 0.75, 1, 1
+            font_size: '16sp'
+            size_hint: (None, None)
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "center_y": 0.08}
+            background_normal: ''
+            background_color:(0, 0, 0, 0)
+            on_release:
+                app.root.current = 'welcome'
+                app.root.transition.direction = 'right'
+                app.delete_user_and_responses()
+
+<QuestionScreen_4>:
+    name: 'Question_4'
+    FloatLayout:
+        Image:
+            source: 'AppKivyMD/Images/fondo 4 pregunta.jpg'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Label:
+            text: "¿Como es la relacion con tus amigos, familiares y compañeros de trabajo u/o estudio?"
+            halign: "center"
+            font_size: '18sp'
+            text_size: self.width * 0.8, None  # Ajuste al 80% del ancho del contenedor
+            size_hint: (0.8, None)
+            height: self.texture_size[1]
+            pos_hint: {"center_x": 0.5, "center_y": 0.75}
+            color: 0, 0, 0, 1
+
+        GridLayout:
+            cols: 2
+            row_force_default: True
+            row_default_height: '64dp'  # Fija la altura de cada fila
+            spacing: dp(10)
+            size_hint: (0.9, None)
+            height: self.minimum_height
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}  # Centrado del contenido
+
+            # Estrella 1 y su descripción
+            Button:
+                id: star1
+                background_normal: 'AppKivyMD/Images/feliz.png'  
+                background_down: 'AppKivyMD/Images/feliz.png'  
+                size_hint: None, None
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(1,'Question_4')
+            Label:
+                text: "Excelente, tengo relaciones cercanas y de apoyo con amigos, familiares y compañeros."
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+                color: 0, 0, 0, 1
+                size_hint: (1, None)  # Para que el label se ajuste al contenido
+
+            # Estrella 2 y su descripción
+            Button:
+                id: star2
+                size_hint: None, None
+                size: '64dp', '64dp'
+                background_normal: 'AppKivyMD/Images/gomelo.png'  # Imagen de fondo normal
+                background_down: 'AppKivyMD/Images/gomelo.png'  
+                on_release: app.on_star_selected(2,'Question_4')
+
+            Label:
+                text: "Buena, aunque a veces hay desacuerdos o tensiones, en general me siento conectado."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+            # Estrella 3 y su descripción
+            Button:
+                id: star3
+                size_hint: None, None
+                background_normal: 'AppKivyMD/Images/ostinado.png'  
+                background_down: 'AppKivyMD/Images/ostinado.png'  
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(3,'Question_4')
+
+            Label:
+                text: "Regular, mis relaciones son algo distantes o superficiales, y no siempre me siento apoyado."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+            # Estrella 4 y su descripción
+            Button:
+                id: star4
+                size_hint: None, None
+                size: '64dp', '64dp'
+                background_normal: 'AppKivyMD/Images/achicopalado.png'  
+                background_down: 'AppKivyMD/Images/achicopalado.png'  
+                on_release: app.on_star_selected(4,'Question_4')
+
+
+            Label:
+                text: "Mala, tengo dificultades para conectar con amigos, familiares y compañeros, y a menudo me siento aislado."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+        Button:
+            id: next_button
+            text: "Siguiente"
+            size_hint: 0.5, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.15}
+            background_normal: ""
+            background_color: (0, 0.47, 1, 1)
+            on_release:
+                app.go_to_next_question('Question_4',4)
+                app.root.current = 'Question_5'
+            disabled: True
+
+        Button:
+            text: "Atrás"
+            color: 0, 0.75, 1, 1
+            font_size: '16sp'
+            size_hint: (None, None)
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "center_y": 0.08}
+            background_normal: ''
+            background_color:(0, 0, 0, 0)
+            on_release:
+                app.root.current = 'welcome'
+                app.root.transition.direction = 'right'
+                app.delete_user_and_responses()
+
+<QuestionScreen_5>:
+    name: 'Question_5'
+    FloatLayout:
+        Image:
+            source: 'AppKivyMD/Images/fondo 5 pregunta.jpg'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Label:
+            text: "¿En el ultimo tiempo, has recurrido a algun profesional de la salud o has realizado algun tipo de terapia?"
+            halign: "center"
+            font_size: '18sp'
+            text_size: self.width * 0.8, None  # Ajuste al 80% del ancho del contenedor
+            size_hint: (0.8, None)
+            height: self.texture_size[1]
+            pos_hint: {"center_x": 0.5, "center_y": 0.75}
+            color: 0, 0, 0, 1
+
+        GridLayout:
+            cols: 2
+            row_force_default: True
+            row_default_height: '64dp'  # Fija la altura de cada fila
+            spacing: dp(10)
+            size_hint: (0.9, None)
+            height: self.minimum_height
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}  # Centrado del contenido
+
+            # Estrella 1 y su descripción
+            Button:
+                id: star1
+                background_normal: 'AppKivyMD/Images/feliz.png'  
+                background_down: 'AppKivyMD/Images/feliz.png'  
+                size_hint: None, None
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(1,'Question_5')
+            Label:
+                text: "No, pero si me gustaría"
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+                color: 0, 0, 0, 1
+                size_hint: (1, None)  # Para que el label se ajuste al contenido
+
+            # Estrella 2 y su descripción
+            Button:
+                id: star2
+                size_hint: None, None
+                size: '64dp', '64dp'
+                background_normal: 'AppKivyMD/Images/ostinado.png'  # Imagen de fondo normal
+                background_down: 'AppKivyMD/Images/ostinado.png'  
+                on_release: app.on_star_selected(2,'Question_5')
+
+            Label:
+                text: "No, y no estoy interesado/a"
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+            # Estrella 3 y su descripción
+            Button:
+                id: star3
+                size_hint: None, None
+                background_normal: 'AppKivyMD/Images/gomelo.png'  
+                background_down: 'AppKivyMD/Images/gomelo.png'  
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(3,'Question_5')
+
+            Label:
+                text: "Si, y me ha gustado"
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+
+        Button:
+            id: next_button
+            text: "Siguiente"
+            size_hint: 0.5, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.15}
+            background_normal: ""
+            background_color: (0, 0.47, 1, 1)
+            on_release:
+                app.go_to_next_question('Question_5',5)
+                app.root.current = 'Question_6'
+            disabled: True
+
+        Button:
+            text: "Atrás"
+            color: 0, 0.75, 1, 1
+            font_size: '16sp'
+            size_hint: (None, None)
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "center_y": 0.08}
+            background_normal: ''
+            background_color:(0, 0, 0, 0)
+            on_release:
+                app.root.current = 'welcome'
+                app.root.transition.direction = 'right'
+                app.delete_user_and_responses()
+<QuestionScreen_6>:
+    name: 'Question_6'
+    FloatLayout:
+        Image:
+            source: 'AppKivyMD/Images/fondo 6 pregunta.jpg'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Label:
+            text: "¿Sientes que encajas en los grupos sociales en los que interactúas?"
+            halign: "center"
+            font_size: '18sp'
+            text_size: self.width * 0.8, None  # Ajuste al 80% del ancho del contenedor
+            size_hint: (0.8, None)
+            height: self.texture_size[1]
+            pos_hint: {"center_x": 0.5, "center_y": 0.75}
+            color: 0, 0, 0, 1
+
+        GridLayout:
+            cols: 2
+            row_force_default: True
+            row_default_height: '64dp'  # Fija la altura de cada fila
+            spacing: dp(10)
+            size_hint: (0.9, None)
+            height: self.minimum_height
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}  # Centrado del contenido
+
+            # Estrella 1 y su descripción
+            Button:
+                id: star1
+                background_normal: 'AppKivyMD/Images/feliz.png'  
+                background_down: 'AppKivyMD/Images/feliz.png'  
+                size_hint: None, None
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(1,'Question_6')
+            Label:
+                text: "Sí, siempre me siento cómodo y plenamente aceptado en los grupos sociales donde interactúo."
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+                color: 0, 0, 0, 1
+                size_hint: (1, None)  # Para que el label se ajuste al contenido
+
+            # Estrella 2 y su descripción
+            Button:
+                id: star2
+                size_hint: None, None
+                size: '64dp', '64dp'
+                background_normal: 'AppKivyMD/Images/gomelo.png'  # Imagen de fondo normal
+                background_down: 'AppKivyMD/Images/gomelo.png'  
+                on_release: app.on_star_selected(2,'Question_6')
+
+            Label:
+                text: "A veces, depende del grupo o la situación, pero en general me siento aceptado."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+            # Estrella 3 y su descripción
+            Button:
+                id: star3
+                size_hint: None, None
+                background_normal: 'AppKivyMD/Images/ostinado.png'  
+                background_down: 'AppKivyMD/Images/ostinado.png'  
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(3,'Question_6')
+
+            Label:
+                text: "No con frecuencia, suelo sentir que no encajo del todo en la mayoría de los grupos."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+            # Estrella 4 y su descripción
+            Button:
+                id: star4
+                size_hint: None, None
+                size: '64dp', '64dp'
+                background_normal: 'AppKivyMD/Images/achicopalado.png'  
+                background_down: 'AppKivyMD/Images/achicopalado.png'  
+                on_release: app.on_star_selected(4,'Question_6')
+
+
+            Label:
+                text: "No, casi nunca me siento como parte de los grupos en los que interactúo."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+        Button:
+            id: next_button
+            text: "Siguiente"
+            size_hint: 0.5, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.15}
+            background_normal: ""
+            background_color: (0, 0.47, 1, 1)
+            on_release:
+                app.go_to_next_question('Question_6',6)
+                app.root.current = 'Question_7'
+            disabled: True
+
+        Button:
+            text: "Atrás"
+            color: 0, 0.75, 1, 1
+            font_size: '16sp'
+            size_hint: (None, None)
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "center_y": 0.08}
+            background_normal: ''
+            background_color:(0, 0, 0, 0)
+            on_release:
+                app.root.current = 'welcome'
+                app.root.transition.direction = 'right'
+                app.delete_user_and_responses()
+<QuestionScreen_7>:
+    name: 'Question_7'
+    FloatLayout:
+        Image:
+            source: 'AppKivyMD/Images/fondo 7 pregunta.jpg'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Label:
+            text: "¿Que actividades te gustaria realizar con respecto a las mostradas a continuacion?"
+            halign: "center"
+            font_size: '18sp'
+            text_size: self.width * 0.8, None  # Ajuste al 80% del ancho del contenedor
+            size_hint: (0.8, None)
+            height: self.texture_size[1]
+            pos_hint: {"center_x": 0.5, "center_y": 0.75}
+            color: 0, 0, 0, 1
+
+        GridLayout:
+            cols: 2
+            row_force_default: True
+            row_default_height: '64dp'  # Fija la altura de cada fila
+            spacing: dp(10)
+            size_hint: (0.9, None)
+            height: self.minimum_height
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}  # Centrado del contenido
+
+            # Estrella 1 y su descripción
+            Button:
+                id: star1
+                background_normal: 'AppKivyMD/Images/feliz.png'  
+                background_down: 'AppKivyMD/Images/feliz.png'  
+                size_hint: None, None
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(1,'Question_7')
+            Label:
+                text: "Terapia de naturaleza: Pasar tiempo al aire libre, ya sea en caminatas por el campo, senderismo o simplemente disfrutando de un parque"
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+                color: 0, 0, 0, 1
+                size_hint: (1, None)  # Para que el label se ajuste al contenido
+
+            # Estrella 2 y su descripción
+            Button:
+                id: star2
+                size_hint: None, None
+                size: '64dp', '64dp'
+                background_normal: 'AppKivyMD/Images/gomelo.png'  # Imagen de fondo normal
+                background_down: 'AppKivyMD/Images/gomelo.png'  
+                on_release: app.on_star_selected(2,'Question_7')
+
+            Label:
+                text: "Meditación y mindfulness: Practicar la meditación diaria o ejercicios de respiración consciente para reducir el estrés."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+            # Estrella 3 y su descripción
+            Button:
+                id: star3
+                size_hint: None, None
+                background_normal: 'AppKivyMD/Images/feliz.png'  
+                background_down: 'AppKivyMD/Images/feliz.png'  
+                size: '64dp', '64dp'
+                on_release: app.on_star_selected(3,'Question_7')
+
+            Label:
+                text: "Lectura: Leer libros, artículos o literatura que aborden temas de bienestar emocional o desarrollo personal."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+            # Estrella 4 y su descripción
+            Button:
+                id: star4
+                size_hint: None, None
+                size: '64dp', '64dp'
+                background_normal: 'AppKivyMD/Images/gomelo.png'  
+                background_down: 'AppKivyMD/Images/gomelo.png'  
+                on_release: app.on_star_selected(4,'Question_7')
+
+
+            Label:
+                text: "Ejercicio físico: Realizar actividades como caminar, correr, practicar yoga o participar en clases de baile."
+                halign: 'left'
+                valign: 'middle'
+                color: 0, 0, 0, 1
+                text_size: self.size
+                size_hint: (1, None)
+
+        Button:
+            id: next_button
+            text: "Siguiente"
+            size_hint: 0.5, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.15}
+            background_normal: ""
+            background_color: (0, 0.47, 1, 1)
+            on_release:
+                app.go_to_next_question('Question_7',7)
+                app.root.current = 'register_2'
+            disabled: True
+
+        Button:
+            text: "Atrás"
+            color: 0, 0.75, 1, 1
+            font_size: '16sp'
+            size_hint: (None, None)
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "center_y": 0.08}
+            background_normal: ''
+            background_color:(0, 0, 0, 0)
+            on_release:
+                app.root.current = 'welcome'
+                app.root.transition.direction = 'right'
+                app.delete_user_and_responses()
+<HomeScreen>:
+    name: 'HomeScreen'
+    
+    FloatLayout:  # Usamos FloatLayout para manejar mejor la posición de los elementos
+        
+        # Fondo de pantalla como imagen
+        Image:
+            source: 'AppKivyMD/Images/PantallaPrincipal.png'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1  # Ocupa toda la pantalla
+
+        # Label en la parte superior
+        Label:
+            size_hint: (1, None)  # Ocupa el 100% del ancho de la pantalla
+            height: self.texture_size[1]  # Ajusta la altura del Label al tamaño del texto
+            text: "HOLA " + app.logged_in_user + " ACA PODRÁS ENCONTRAR..."
+            halign: "center"  # Centra el texto horizontalmente
+            font_size: '18sp'
+            text_size: self.width * 0.8, None 
+            pos_hint: {'x': 0, 'y': 0.9}  # Posiciona el Label cerca de la parte superior
+            color: (0, 0, 0, 1)  # Color negro
+
+
+        Button:
+            background_color: 0.5, 0.7, 0.7, 1
+            size_hint: (0.8, None)
+            height: '100dp'
+            text: "Algunas estrategias de mejora y ayuda especiales para ti"
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            color: 0, 0, 0, 1
+            pos_hint: {'x': 0.1, 'y': 0.65}  # Posiciona el botón en la parte central
+            on_release:
+                app.root.current = 'EstrategiasScreen'
+
+        Button:
+            background_color: 0.95, 0.97, 0.76, 1
+            size_hint: (0.8, None)
+            height: '100dp'
+            text: "Rutinas de ejercicio que te pueden gustar y servir"
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            color: 0, 0, 0, 1
+            pos_hint: {'x': 0.1, 'y': 0.45}  # Posiciona el botón debajo del anterior
+            on_release:
+                app.root.current='RutinasScreen'
+
+        Button:
+            background_color: 0.95, 0.72, 0.64, 1
+            size_hint: (0.8, None)
+            height: '100dp'
+            text: "Mas informacion que te puede interesar acerca los trastornos de ansiedad y depresion"
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            color: 0, 0, 0, 1
+            pos_hint: {'x': 0.1, 'y': 0.25}  # Posiciona el botón más abajo
+            on_release:
+                app.root.current = 'InformacionScreen'
+
+        # Botones en la parte inferior
+        BoxLayout:
+            size_hint: (1, None)  # Se ajusta solo en el eje Y, ocupando el 100% del ancho
+            height: '80dp'  # Se define una altura fija para la caja de los botones
+            orientation: 'horizontal'
+            pos_hint: {'x': 0, 'y': 0}  # Posiciona el layout en la parte inferior
+            padding: [0, 0, 0, 0]  # Margen alrededor de los botones
+            spacing: 2  # Espacio entre los botones
+            
+            # Botón de Chat
+            Button:
+                size_hint: None, None
+                size: '120dp', '100dp'
+                background_normal: 'AppKivyMD/Images/chat.png'
+                background_down: 'AppKivyMD/Images/chat.png'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        width: 2
+                        rectangle: (self.x, self.y, self.width, self.height)
+                on_release:
+                    app.root.current = 'ChatScreen'
+
+            # Botón de Inicio
+            Button:
+                size_hint: None, None
+                size: '120dp', '100dp'
+                background_normal: 'AppKivyMD/Images/choza.png'
+                background_down: 'AppKivyMD/Images/choza.png'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        width: 2
+                        rectangle: (self.x, self.y, self.width, self.height)
+                on_release:
+                    app.root.current = 'HomeScreen'
+            
+            # Botón de Usuario
+            Button:
+                size_hint: None, None
+                size: '120dp', '100dp'
+                background_normal: 'AppKivyMD/Images/persona.png'
+                background_down: 'AppKivyMD/Images/persona.png'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        width: 2
+                        rectangle: (self.x, self.y, self.width, self.height)
+                on_release:
+                    app.root.current = 'UserScreen'
+<EstrategiasScreen>:
+    name:'EstrategiasScreen'
+    Image:
+        source: 'AppKivyMD/Images/PantallaEstrategias.png'
+        allow_stretch: True
+        keep_ratio: False
+        size_hint: 1, 1  # Ocupa toda la pantalla
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        
+        Label:
+            text: "Estrategias de mejora y ayuda especiales para ti"
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            font_size: 24
+            bold: True
+            size_hint_y: None
+            height: 60
+            color: 0, 0, 0, 1
+            
+        ScrollView:
+            BoxLayout:
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+                orientation: 'vertical'
+                spacing: 10
+                padding: 10
+                size_hint_y: None
+                height: self.minimum_height
+                
+                Label:
+                    halign: 'center'
+                    valign: 'middle'
+                    text: "[color=ff0000]Ejercicio de respiración[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "Inhalar por la nariz durante 4 segundos, sostener la respiración durante 7 segundos y exhalar lentamente por la boca durante 8 segundos.Este ejercicio ayuda a calmar el sistema nervioso y reducir la sensación de agobio."
+                    font_size: 16
+                    size_hint_y: None
+                    height: 120
+                    color: 0, 0, 0, 1
+
+                Label:
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "[color=ff0000]Ejercicios de enfoque sensorial[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                    
+                    text: "Elegir un objeto y observarlo detenidamente durante un minuto.Notar colores, texturas y formas. Este ejercicio ayuda a anclar la atención en el presente, alejando pensamientos ansiosos."
+                    font_size: 16
+                    size_hint_y: None
+                    height: 100
+                    color: 0, 0, 0, 1
+
+                Label:
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+                    text: "[color=ff0000]Ejercicio de gratitud[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "Escribir tres cosas por las que se está agradecido cada día. Esto promueve una mentalidad positiva y ayuda a combatir pensamientos negativos."
+                    font_size: 16
+                    size_hint_y: None
+                    height: 80
+                    color: 0, 0, 0, 1
+
+                Label:
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "[color=ff0000]Visualización positiva[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "Cerrar los ojos y visualizar un lugar tranquilo y seguro durante 5-10 minutos.Describir los detalles de ese lugar en la mente. Esto ayuda a reducir la ansiedad."
+                    font_size: 16
+                    size_hint_y: None
+                    height: 80
+                    color: 0, 0, 0, 1
+
+        Button:
+            text: "VOLVER"
+            font_size: 18
+            size_hint: None, None
+            size: 120, 40  # Cambiado para hacerlo más pequeño
+            pos_hint: {'right': 1, 'y': 0}  # Posición en la esquina inferior derecha
+            background_normal: ''
+            background_color: 1, 1, 0.4, 1  # Amarillo claro
+            on_press: app.root.current = 'HomeScreen'
+
+<InformacionScreen>:
+    name:'InformacionScreen'
+    Image:
+        source: 'AppKivyMD/Images/PantallaInformacion.png'
+        allow_stretch: True
+        keep_ratio: False
+        size_hint: 1, 1  # Ocupa toda la pantalla
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Label:
+            size_hint_y: None
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            text: "Más información que te puede interesar acerca los trastornos de ansiedad y depresión"
+            font_size: 24
+            bold: True
+            size_hint_y: None
+            height: 120
+            color: 0, 0, 0, 1
+            canvas.before:
+                Color:
+                    rgba: 1, 0.6, 0.5, 1  # Fondo color salmón
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 10
+                padding: 10
+                size_hint_y: None
+                height: self.minimum_height
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    text: "La ansiedad es un trastorno común caracterizado por una preocupación excesiva y miedo en situaciones cotidianas, que puede llevar a problemas de sueño y trastornos alimenticios. Afecta tanto el ámbito psicológico como físico, manifestándose en síntomas como dolor de estómago, taquicardia y sudoración. Existen diferentes tipos de ansiedad, como la ansiedad social, el trastorno de pánico y el mutismo selectivo. Para manejarla, se recomienda respirar profundamente, hacer ejercicio, dormir bien y centrarse en uno mismo, además de buscar ayuda profesional si los síntomas persisten y afectan la vida diaria."
+                    font_size: 16
+                    size_hint_y: None
+                    height: 320
+                    color: 0, 0, 0, 1
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    text: "La depresión es un trastorno mental común que se manifiesta a través de sentimientos persistentes de tristeza, vacío y pérdida de interés en actividades que antes se disfrutaban. A menudo, se acompaña de síntomas físicos como fatiga, cambios en el apetito y problemas de sueño. Las personas con depresión pueden tener dificultades para concentrarse y tomar decisiones, y pueden sentirse aisladas o sin esperanza. Existen varios tipos de depresión, incluidos el trastorno depresivo mayor y la distimia. Para enfrentar la depresión, es fundamental buscar apoyo emocional, mantener una rutina diaria, realizar actividad física y, si es necesario, acudir a un profesional de la salud mental para recibir tratamiento adecuado."
+                    font_size: 16
+                    size_hint_y: None
+                    height: 320
+                    color: 0, 0, 0, 1
+
+        RelativeLayout:
+            size_hint_y: None
+            height: 100
+
+            Button:
+                text: "VOLVER"
+                font_size: 18
+                size_hint: None, None
+                size: 120, 40
+                pos_hint: {'right': 1, 'y': 0}  # Posicionado en la esquina inferior derecha
+                background_normal: ''
+                background_color: 0.4, 0.7, 1, 1  # Azul claro
+                on_press: app.root.current = 'HomeScreen'
+
+<RutinasScreen>:
+    name: 'RutinasScreen'
+    
+    Image:
+        source: 'AppKivyMD/Images/PantallaRutinas.png'
+        allow_stretch: True
+        keep_ratio: False
+        size_hint: 1, 1  # Ocupa toda la pantalla
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "Rutinas de ejercicio que te pueden gustar y servir"
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            font_size: 24
+            bold: True
+            size_hint_y: None
+            height: 100
+            color: 0, 0, 0, 1
+            canvas.before:
+                Color:
+                    rgba: 1, 0.9, 0.5, 1  # Fondo color amarillo pálido
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 10
+                padding: 10
+                size_hint_y: None
+                height: self.minimum_height
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "[color=ff0000]Principiante[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    text: "Rutinas de aislamiento muscular por día: Simplemente hacer un conjunto de ejercicios según el día:\n\nLunes: Pecho\nMartes: Espalda\nMiércoles: Hombros\nJueves: Piernas\nViernes: Brazo"
+                    font_size: 16
+                    size_hint_y: None
+                    height: 220
+                    color: 0, 0, 0, 1
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "[color=ff0000]Intermedio[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    text: "PPL (Push, Pull, Legs): Es una rutina que se basa en 2 tipos de movimiento, y una zona específica (pierna), los cuales son:\n\n1. Músculos de la parte superior del cuerpo capaces de empujar (Push)\n2. Músculos de la parte superior del cuerpo capaces de jalar (Pull)\n3. Entrenamiento de piernas (Legs)"
+                    font_size: 16
+                    size_hint_y: None
+                    height: 320
+                    color: 0, 0, 0, 1
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size                
+                    text: "[color=ff0000]Avanzado[/color]"
+                    font_size: 20
+                    markup: True
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    text: "Arnold Split: Consiste en entrenar 6 días a la semana, de la mano con 3 rutinas con aislamientos musculares en cada día, las cuales son:\n\n1. Pecho y espalda\n2. Hombro y tríceps\n3. Bíceps y pierna"
+                    font_size: 16
+                    size_hint_y: None
+                    height: 280
+                    color: 0, 0, 0, 1
+
+        Button:
+            text: "VOLVER"
+            font_size: 18
+            size_hint: None, None
+            size: 120, 40  # Botón pequeño
+            pos_hint: {'right': 1, 'y': 0}  # Posición en la esquina inferior derecha
+            background_normal: ''
+            background_color: 0.4, 0.7, 1, 1  # Azul claro
+            on_press: app.root.current = 'HomeScreen'
+
+
+
+<ChatScreen>:
+    name:'ChatScreen'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Pantalla de chat'
+        Button:
+            text: 'Volver a INICIO'
+            on_release:
+                app.root.current = 'home'
+
+<UserScreen>:
+    name:'UserScreen'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Pantalla de Usuario'
+        Button:
+            text: 'Volver a INICIO'
+            on_release:
+                app.root.current = 'home'
